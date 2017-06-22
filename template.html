@@ -1,0 +1,78 @@
+<html>
+<head>
+	<title>模板校对器</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/main.css">
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script type="text/javascript" src="./js/json_parse.js"></script>
+	<script type="text/javascript" src="./js/check_tpl.js"></script>
+ 
+</head>
+<body>
+	<div class="contaner">
+		<div class="header"></div>
+		<div class="body">
+			<div class="left">
+				<textarea  class="area source">{
+    "交易流水号": {
+        "content": "Code"
+    },
+    "汇款日期": {
+        "content": "RemitDate"
+    },
+    "汇款方": {
+        "content": "RemitUser"
+    },
+    "汇款账号": {
+        "content": "FromAccount"
+    },
+    "目标账号": {
+        "content": "ToAccount"
+    },
+    "客户公司":{
+        "content": "CustomerCompany"
+    },
+    "状态": {
+        "content": {
+            <$ = Model.StatusName $>
+            <$ if(Model.Status == 3){ $> 
+                <a class="i-info-icon" style="color: #a5257c;margin-left: 10px;"
+                   data-control="tip/async/index"
+                   data-position="tm"
+                   data-extend-data="<$= Model.Reason $>"></a>
+            <$ } $>
+        }
+    }
+}
+				</textarea>
+			</div>
+			<div class="right">
+				<textarea class="area target"></textarea>
+			</div>
+		</div>
+		<div class="footer">
+			<textarea class="result area"></textarea>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			$(".source")
+			.on("mouseenter",function(){
+				$(this).css({"border-color":"red"})
+			})
+			.on("mouseleave",function(){
+				$(this).css({"border-color":"rgb(16, 15, 15)"})
+			})
+			
+			new CheckTempl({
+				SourceArea:$(".source"),
+				TargetArea:$(".target"),
+				ResultArea:$(".result"),
+				Success:true,
+				Error:{}
+			})
+			.Binding()
+		}) 
+	</script>
+</body>
+</html>
